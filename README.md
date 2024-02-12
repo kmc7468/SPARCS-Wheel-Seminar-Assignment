@@ -152,7 +152,7 @@ S3는 asset을 업로드하기 위해 사용됩니다. 이를 위해서 권한�
 
 # Submission
 
-과제의 내용이 모두 구현된 **Github Repository**와 AWS에 배포된 **서비스의 링크**를 Slack 과제 제출 스레드에 제출하면 됩니다. 
+과제의 내용이 모두 구현된 **Github Repository**와 AWS에 배포된 **서비스의 링크**, 모든 작업을 수행한 후 생성된 **JWT 토큰**을 제출해 주세요.
 
 
 # Remarks
