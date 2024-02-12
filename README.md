@@ -130,7 +130,7 @@ AWS에 배포하기 위해 `EC2`와 `S3`을 사용해 배포 환경을 구성해
 
 S3는 asset을 업로드하기 위해 사용됩니다. 이를 위해서 권한이 **public**으로 설정된 S3 버킷을 생성해 주시면 됩니다.
 
-## 5. SSL 인증서 발급
+## 5. SSL 인증서
 
 `letsencrypt`에서 SSL 인증서를 발급받아 서비스에 https로 접속할 수 있도록 합니다. 
 
@@ -140,6 +140,54 @@ S3는 asset을 업로드하기 위해 사용됩니다. 이를 위해서 권한�
 - [`certbot` 이미지](https://hub.docker.com/r/webdevops/certbot) 사용
 - `nginx` 컨테이너 볼륨 매핑 후 로컬 머신에서 `certbot` 사용
 - 기존 `nginx` 이미지 대신 SSL 인증서 발급 및 자동 갱신을 지원하는 다른 이미지 사용
+
+nginx 설정에 적용하기 위해서는 밑 설정을 http 블록에 추가해주시면 됩니다.
+
+```conf
+ssl_certificate /path/to/ssl/fullchain.pem;
+ssl_certificate_key /path/to/ssl/privkey.pem;
+```
+
+nginx 세미나 도중 certbot의 사용방법에 대해 다뤄지지 않았으므로, 밑에 후술된 방법을 사용하는 것을 추천합니다.
+
+### pip certbot standalone을 통한 인증
+
+`certbot` 이미지를 사용하여 `standalone` 모드로 인증을 받을 수 있습니다.
+
+nginx 컨테이너가 중단 된 상태에서 인증서를 발급받고, 인증서를 받은 후에 다시 nginx 컨테이너를 실행하면 됩니다.
+
+```bash
+certbot certonly --standalone -d {domain}
+```
+
+이후 /etc/letsencrypt/live/{domain} 폴더에 인증서가 저장되며, 이를 nginx 컨테이너에 볼륨 매핑하여 사용하면 됩니다.
+
+### pip certbot .well-known 폴더를 통한 인증
+
+nginx 컨테이너를 설정하실 때 `.well-known` 폴더를 컨테이너 내부에 볼륨 매핑하여 `certbot`이 인증을 받을 수 있도록 해주시면 됩니다.
+
+`docker-compose.yml` 에서 다음 예시와 같이 볼륨 매핑을 먼저 합니다.
+
+```yaml
+volumes:
+  - ./web/.well-known:/var/www/.well-known
+```
+
+그리고 밑 설정을 http 블록에 추가해주시면 됩니다.
+
+```conf
+location /.well-known {
+    alias /var/www/.well-known;
+}
+```
+
+이후 아래 명령어를 통해 SSL 인증서를 발급받을 수 있습니다.
+
+```bash
+certbot certonly --webroot -w ./web/ -d {domain}
+```
+
+
 
 ## 6. 데이터베이스 백업 설정
 > Optional 과제를 수행하는 경우에만 필요한 단계입니다. 
