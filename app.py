@@ -236,4 +236,4 @@ if __name__ == '__main__':
     #chainname = os.environ.get("CHAINNAME", "fullchain.pem")
     #keyname = os.environ.get("KEYNAME", "privkey.pem")
     #ssl_context.load_cert_chain(sslPath / chainname, sslPath / keyname)
-    app.run(host='0.0.0.0', port=PORT)
+    app.run(host='0.0.0.0', port=int(PORT))
