@@ -38,7 +38,7 @@ tempPath.mkdir(exist_ok=True)
 # AWS LOGIN
 aws = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
 
-def load_env(envPath):
+def load_env():
     required = [
         "DOMAIN",
         "AWS_ACCESS_KEY_ID",
@@ -234,4 +234,5 @@ if __name__ == '__main__':
     #chainname = os.environ.get("CHAINNAME", "fullchain.pem")
     #keyname = os.environ.get("KEYNAME", "privkey.pem")
     #ssl_context.load_cert_chain(sslPath / chainname, sslPath / keyname)
+    load_env()
     app.run(host='0.0.0.0', port=5000)
