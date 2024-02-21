@@ -38,7 +38,6 @@ tempPath.mkdir(exist_ok=True)
 
 # AWS LOGIN
 aws = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
-aws.list_buckets()
 
 def load_env(envPath):
     required = [
@@ -57,7 +56,7 @@ def upload_to_s3(keyword: str, objname: str):
     if "/" in objname: raise ValueError("obj name error")
     uploadFile = tempPath / objname
     uploadFile.write_text(keyword)
-
+    
     aws.upload_file(uploadFile, AWS_S3_BUCKET_NAME, objname)
 
     return f"https://{AWS_S3_BUCKET_NAME}.s3.amazonaws.com/{objname}"
