@@ -21,6 +21,7 @@
     - **WHL208** Github Actions & Introduction to CI / CD
 - [ ] **`EC2`에 배포된 서비스를 `HTTPS`로 접속할 수 있도록 `ssl` 인증서 발급**
     - **WHL206** Security & Backup
+    - **WHL209** Network & DNS
     - **WHL210** Apache & NginX
 - [ ] (optional) **Shell script와 crontab을 이용하여 데이터베이스를 주기적으로 백업**
     - **WHL203** Shell Script & Cron
@@ -52,6 +53,7 @@
 
 #### 환경 변수
 ```dotenv
+PORT=                    # 서버 포트
 DOMAIN=                  # 서비스 도메인
 AWS_ACCESS_KEY_ID=       # AWS Access Key ID
 AWS_SECRET_ACCESS_KEY=   # AWS Secret Access Key
