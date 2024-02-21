@@ -17,7 +17,6 @@ s3chk = None
 s3chkcache = False
 SUBMIT_SERVER = "wheel-seminar.sparcs.net"
 
-PORT = None
 DOMAIN = None
 AWS_ACCESS_KEY_ID = None
 AWS_SECRET_ACCESS_KEY = None
@@ -41,7 +40,6 @@ aws = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_
 
 def load_env(envPath):
     required = [
-        "PORT",
         "DOMAIN",
         "AWS_ACCESS_KEY_ID",
         "AWS_SECRET_ACCESS_KEY",
@@ -236,4 +234,4 @@ if __name__ == '__main__':
     #chainname = os.environ.get("CHAINNAME", "fullchain.pem")
     #keyname = os.environ.get("KEYNAME", "privkey.pem")
     #ssl_context.load_cert_chain(sslPath / chainname, sslPath / keyname)
-    app.run(host='0.0.0.0', port=int(PORT))
+    app.run(host='0.0.0.0', port=5000)

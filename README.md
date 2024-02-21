@@ -50,10 +50,10 @@
 ### 서버 컨테이너
 위에서 작성한 `Dockerfile`을 이용하여 서버 컨테이너를 구성합니다. 
 이때 각각의 컨테이너에 필요한 환경 변수들을 설정해 주어야 합니다. 
+**서버 포트는 5000번 포트 입니다**
 
 #### 환경 변수
 ```dotenv
-PORT=                    # 서버 포트
 DOMAIN=                  # 서비스 도메인
 AWS_ACCESS_KEY_ID=       # AWS Access Key ID
 AWS_SECRET_ACCESS_KEY=   # AWS Secret Access Key
