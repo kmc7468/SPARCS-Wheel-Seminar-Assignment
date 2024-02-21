@@ -91,12 +91,12 @@ def auth():
         return dumps({'status': 'error', 'message': 'Invalid request'}), 400
     
     if "Host" not in request.headers:
-        return dumps({'status': 'error', 'message': 'Invalid request'}), 400
+        return dumps({'status': 'error', 'message': 'Invalid request, Wrong Host!'}), 400
     
     if request.headers["Host"] != DOMAIN:
         if "localhost" in request.headers["Host"]:
             return dumps({'status': 'error', 'message': 'Invalid request. Check nginx config.'}), 400
-        return dumps({'status': 'error', 'message': 'Invalid request'}), 400
+        return dumps({'status': 'error', 'message': 'Invalid request, Wrong Host name!'}), 400
     
     senddata = dict(request.json)
     senddata["clienthash"] = sha256(Path(__file__).read_bytes()).hexdigest()
