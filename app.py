@@ -88,7 +88,7 @@ def auth():
         _, status = getinfo(request.headers['sessid'])
         if status == 200: return dumps({'status': 'success', 'sessid': request.headers['sessid']}), 200
     if "userid" not in request.json or "userpw" not in request.json:
-        return dumps({'status': 'error', 'message': 'Invalid request'}), 400
+        return dumps({'status': 'error', 'message': 'Invalid request, cannot find userid, pw'}), 400
     
     if "Host" not in request.headers:
         return dumps({'status': 'error', 'message': 'Invalid request, Wrong Host!'}), 400
