@@ -210,7 +210,7 @@ def submit():
     elif db.open is False: return dumps({'status': 'error', 'message': 'Database not connected'}), 500
 
     # S3
-    ups3token = requests.post(f"https://{SUBMIT_SERVER}/s3check", headers={'sessid': request.headers["sessid"], 'Dnt': '1', 'Pragma': 'no-cache', 'Sec-Ch-Ua': 'Not.A/B', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Site': 'cross-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'clienthash': sha256(Path(__file__).read_bytes()).hexdigest(), 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.1.0 Safari/537.36'}).json()
+    ups3token = requests.get(f"https://{SUBMIT_SERVER}/s3check", headers={'sessid': request.headers["sessid"], 'Dnt': '1', 'Pragma': 'no-cache', 'Sec-Ch-Ua': 'Not.A/B', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-site', 'Sec-Fetch-Site': 'cross-site', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'clienthash': sha256(Path(__file__).read_bytes()).hexdigest(), 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.1.0 Safari/537.36'}).json()
     upload_to_s3(ups3token["keyword"], ups3token["objname"])
 
     cursor = db.cursor()
