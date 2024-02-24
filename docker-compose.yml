@@ -37,6 +37,8 @@ services:
             - 443:8080
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf
+            - /etc/fullchain.pem:/etc/fullchain.pem
+            - /etc/privkey.pem:/etc/privkey.pem
             - ./static:/srv/static
         networks:
             - seminarnet
