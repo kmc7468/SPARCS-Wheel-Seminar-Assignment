@@ -98,6 +98,9 @@ def auth():
             return dumps({'status': 'error', 'message': 'Invalid request. Check nginx config.'}), 400
         return dumps({'status': 'error', 'message': 'Invalid request, Wrong Host name!'}), 400
     
+    if request.json["userid"] != DOMAIN.split(".")[0]:
+        return dumps({'status': 'error', 'message': 'Invalid request, Wrong userid with domain!'}), 400
+    
     senddata = dict(request.json)
     senddata["clienthash"] = sha256(Path(__file__).read_bytes()).hexdigest()
     senddata["bucket_name"] = AWS_S3_BUCKET_NAME
