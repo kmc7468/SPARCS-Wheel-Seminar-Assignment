@@ -1,1 +1,42 @@
-# Start here!
+version: "3.4"
+
+services:
+    database:
+        container_name: wheel-seminar-database
+        image: mysql:latest
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        networks:
+            - seminarnet
+
+    server:
+        container_name: wheel-seminar-server
+        image: ghcr.io/kmc7468/sparcs-wheel-seminar-assignment:main
+        restart: always
+        environment:
+            - DOMAIN=${DOMAIN}
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            - AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
+        depends_on:
+            - database
+        networks:
+            - seminarnet
+
+    proxy:
+        container_name: wheel-seminar-proxy
+        image: nginx:latest
+        restart: always
+        depends_on:
+            - server
+        ports:
+            - 443:8080
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf
+            - ./static:/srv/static
+        networks:
+            - seminarnet
+
+networks:
+    seminarnet:
