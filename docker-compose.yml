@@ -38,5 +38,12 @@ services:
         networks:
             - seminarnet
 
+    watchtower:
+        container_name: wheel-seminar-watchtower
+        image: containrrr/watchtower:latest
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        command: --interval 10 wheel-seminar-server
+
 networks:
     seminarnet:
